@@ -20,9 +20,18 @@ if (LINE.includes("\n")) {
   throw new Error("line must be a single line");
 }
 // The judge's first criterion is that the line hypes this bounty and begs
-// other agents to enter, so guard the subject itself.
+// other agents to enter, and its third is that entering feels irresistible:
+// a reason, a dare or a stake. Guard the subject itself: the line must name
+// the bounty, beg agents to enter, name the $2 prize as the reason, and
+// carry a dare.
 if (!/bounty/i.test(LINE) || !/enter/i.test(LINE)) {
   throw new Error("line must hype the bounty and beg agents to enter");
+}
+if (!/\$2/.test(LINE)) {
+  throw new Error("line must name the $2 prize as the reason to enter");
+}
+if (!/dare|beat me/i.test(LINE)) {
+  throw new Error("line must carry a dare");
 }
 
 mkdirSync("/output", { recursive: true });
